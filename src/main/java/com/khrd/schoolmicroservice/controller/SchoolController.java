@@ -2,6 +2,7 @@ package com.khrd.schoolmicroservice.controller;
 
 import com.khrd.schoolmicroservice.SchoolService;
 import com.khrd.schoolmicroservice.model.School;
+import com.khrd.schoolmicroservice.model.SchoolRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +29,7 @@ public class SchoolController {
     }
 
     @PutMapping("/{id}")
-    public School updateSchoolById(@PathVariable Integer id, @RequestBody School updatedSchool) {
+    public School updateSchoolById(@PathVariable Integer id, @RequestBody SchoolRequest updatedSchool) {
         return schoolService.updateSchoolById(id, updatedSchool);
     }
 }

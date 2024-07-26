@@ -1,6 +1,7 @@
 package com.khrd.schoolmicroservice;
 
 import com.khrd.schoolmicroservice.model.School;
+import com.khrd.schoolmicroservice.model.SchoolRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,26 +23,17 @@ public class SchoolService {
         return schoolRepository.findById(id).orElse(null);
     }
 
-    public School updateSchoolById(Integer id, School updatedSchool) {
+    public School updateSchoolById(Integer id, SchoolRequest updatedSchool) {
         Optional<School> optionalSchool = schoolRepository.findById(id);
 
         if (optionalSchool.isPresent()) {
-            School existingSchool = optionalSchool.get();
+            School uSchool = optionalSchool.get();
+            uSchool.setSchoolName(updatedSchool.getSchoolName());
+            uSchool.setLocation(updatedSchool.getLocation());
+            uSchool.setPrincipalName(updatedSchool.getPrincipalName());
 
-            // Create a new School entity with the updated ID
-            School newSchool = new School();
-            newSchool.setId(updatedSchool.getId());
-            newSchool.setSchoolName(updatedSchool.getSchoolName());
-            newSchool.setLocation(updatedSchool.getLocation());
-            newSchool.setPrincipalName(updatedSchool.getPrincipalName());
 
-            // Save the new entity
-            School savedSchool = schoolRepository.save(newSchool);
-
-            // Delete the old entity
-            schoolRepository.delete(existingSchool);
-
-            return savedSchool;
+            return schoolRepository.save(uSchool);
         } else {
             return null;
         }
